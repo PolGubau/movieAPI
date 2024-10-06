@@ -51,6 +51,9 @@ public class MovieController {
             @RequestPart MultipartFile file,
             @RequestPart String movieDto
     ) throws IOException {
+
+        if (file.isEmpty()) file = null;
+
         MovieDto dto = convertToMovieDto(movieDto);
         return new ResponseEntity<>(movieService.updateMovie(movieId, dto, file), HttpStatus.OK);
     }
