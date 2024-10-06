@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: FilmAPI
+  datasource:
+    url: jdbc:mysql://localhost:3306/movies?createDatabaseIfNotExist=true
+    username: root
+    password: polpol
+  jpa:
+    hibernate:
+      dialect: org.hibernate.dialect.MySQL5Dialect
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+server:
+  port: 8081
+
+project:
+  poster:
+    path: posters/
+
+base:
+    url: "http://localhost:8081"
