@@ -37,12 +37,12 @@ public class MovieController {
 
     @GetMapping("{movieId}")
     public ResponseEntity<MovieDto> getMovieHandler(@PathVariable Integer movieId) {
-        return new ResponseEntity<>(movieService.getMovie(movieId), HttpStatus.OK);
+        return ResponseEntity.ok(movieService.getMovie(movieId));
     }
 
     @GetMapping("/")
     public ResponseEntity<List<MovieDto>> getAllMoviesHandler() {
-        return new ResponseEntity<>(movieService.getAllMovies(), HttpStatus.OK);
+        return ResponseEntity.ok(movieService.getAllMovies());
     }
 
     @PutMapping("{movieId}")
@@ -55,12 +55,13 @@ public class MovieController {
         if (file.isEmpty()) file = null;
 
         MovieDto dto = convertToMovieDto(movieDto);
-        return new ResponseEntity<>(movieService.updateMovie(movieId, dto, file), HttpStatus.OK);
+        return ResponseEntity.ok(movieService.updateMovie(movieId, dto, file));
+
     }
 
     @DeleteMapping("{movieId}")
     public ResponseEntity<String> deleteMovieHandler(@PathVariable Integer movieId) throws IOException {
-        return new ResponseEntity<>(movieService.deleteMovie(movieId), HttpStatus.OK);
+        return ResponseEntity.ok(movieService.deleteMovie(movieId));
     }
 
 
