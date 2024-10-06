@@ -1,5 +1,6 @@
 package com.polgubau.filmAPI.FilmAPI.controllers;
 
+import com.polgubau.filmAPI.FilmAPI.exceptions.EmptyFileException;
 import com.polgubau.filmAPI.FilmAPI.service.FileService;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,16 +17,17 @@ import java.io.InputStream;
 @RequestMapping("/file/")
 public class FileController {
     private final FileService fileService;
+    @Value("${project.poster.path}")
+    private String path;
 
     public FileController(FileService fileService) {
         this.fileService = fileService;
     }
-    @Value("${project.poster.path}")
-    private String path;
+
     @PostMapping("upload")
-    public ResponseEntity<String> uploadFileHandler(@RequestPart MultipartFile file) throws IOException {
+    public ResponseEntity<String> uploadFileHandler(@RequestPart MultipartFile file) throws IOException, EmptyFileException {
         String uploadedFileName = fileService.uploadFile(path, file);
-        return ResponseEntity.ok(  "File uploaded successfully: " + uploadedFileName);
+        return ResponseEntity.ok("File uploaded successfully: " + uploadedFileName);
     }
 
     @GetMapping("get/{fileName}")

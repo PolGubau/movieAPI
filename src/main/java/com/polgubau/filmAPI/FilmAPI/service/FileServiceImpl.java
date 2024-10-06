@@ -1,5 +1,7 @@
 package com.polgubau.filmAPI.FilmAPI.service;
 
+import com.polgubau.filmAPI.FilmAPI.exceptions.EmptyFileException;
+import com.polgubau.filmAPI.FilmAPI.exceptions.FileExistsException;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -12,17 +14,17 @@ import java.nio.file.Paths;
 public class FileServiceImpl implements FileService {
 
     @Override
-    public String uploadFile(String path, @NotNull MultipartFile file) throws IOException {
+    public String uploadFile(String path, @NotNull MultipartFile file) throws IOException, EmptyFileException {
         // get name of file
         String fileName = file.getOriginalFilename();
 
         if (fileName == null) {
-            throw new RuntimeException("File name is null");
+            throw new EmptyFileException("File name is null");
         }
 
         boolean itExists = Files.exists(Paths.get(path + File.separator + fileName));
         if (itExists) {
-            throw new RuntimeException("File already exists, please rename it");
+            throw new FileExistsException("File already exists, please rename it");
         }
 
 
